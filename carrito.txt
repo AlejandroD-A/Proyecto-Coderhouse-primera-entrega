@@ -1,0 +1,61 @@
+{
+	"cartItems": [
+		{
+			"id": 1,
+			"timestamp": 1624920440858,
+			"product": {
+				"id": 1,
+				"timestamps": 1624920421088,
+				"nombre": "nuevo",
+				"descripcion": "Nuevo",
+				"codigo": "2",
+				"foto": "http://image.jpg",
+				"precio": 5500,
+				"stock": 5
+			}
+		},
+		{
+			"id": 2,
+			"timestamp": 1624920444733,
+			"product": {
+				"id": 1,
+				"timestamps": 1624920421088,
+				"nombre": "nuevo",
+				"descripcion": "Nuevo",
+				"codigo": "2",
+				"foto": "http://image.jpg",
+				"precio": 5500,
+				"stock": 5
+			}
+		},
+		{
+			"id": 3,
+			"timestamp": 1624920445164,
+			"product": {
+				"id": 1,
+				"timestamps": 1624920421088,
+				"nombre": "nuevo",
+				"descripcion": "Nuevo",
+				"codigo": "2",
+				"foto": "http://image.jpg",
+				"precio": 5500,
+				"stock": 5
+			}
+		},
+		{
+			"id": 4,
+			"timestamp": 1624923048385,
+			"product": {
+				"id": 2,
+				"timestamps": 1624920421707,
+				"nombre": "nuevo",
+				"descripcion": "Nueva Descripcion",
+				"codigo": "2",
+				"foto": "http://image.jpg",
+				"precio": 5500,
+				"stock": 5
+			}
+		}
+	],
+	"currentId": 5
+}

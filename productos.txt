@@ -1,0 +1,65 @@
+{
+	"products": [
+		{
+			"id": 2,
+			"timestamps": 1624920421707,
+			"nombre": "nuevo",
+			"descripcion": "Nueva Descripcion",
+			"codigo": "2",
+			"foto": "http://image.jpg",
+			"precio": 5500,
+			"stock": 5
+		},
+		{
+			"id": 3,
+			"timestamps": 1624920422235,
+			"nombre": "nuevo",
+			"descripcion": "Nuevo",
+			"codigo": "2",
+			"foto": "http://image.jpg",
+			"precio": 5500,
+			"stock": 5
+		},
+		{
+			"id": 4,
+			"timestamps": 1624921414720,
+			"nombre": "nuevo",
+			"descripcion": "Nuevo",
+			"codigo": "2",
+			"foto": "http://image.jpg",
+			"precio": 5500,
+			"stock": 5
+		},
+		{
+			"id": 5,
+			"timestamps": 1624921415809,
+			"nombre": "nuevo",
+			"descripcion": "Nuevo",
+			"codigo": "2",
+			"foto": "http://image.jpg",
+			"precio": 5500,
+			"stock": 5
+		},
+		{
+			"id": 6,
+			"timestamps": 1624921416595,
+			"nombre": "nuevo",
+			"descripcion": "Nuevo",
+			"codigo": "2",
+			"foto": "http://image.jpg",
+			"precio": 5500,
+			"stock": 5
+		},
+		{
+			"id": 7,
+			"timestamps": 1624923004118,
+			"nombre": "nuevo",
+			"descripcion": "Nuevo",
+			"codigo": "2",
+			"foto": "http://image.jpg",
+			"precio": 5500,
+			"stock": 5
+		}
+	],
+	"currentId": 7
+}

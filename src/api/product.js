@@ -1,55 +1,64 @@
+const fs = require('fs')
 
 class Product{
     
-    constructor(){
-        this.products = [{
-            id: 1,
-            timestamps: Date.now(),
-            nombre: 'Nuevo producto',
-            descripcion: 'Mi nuevo Producto',
-            codigo: '0001',
-            foto: 'http://image.jpg',
-            precio: 5500.00,
-            stock: 5
-        }]
-        this.lastId = 1
+    constructor(path){
+        this.path = path
     }
 
-    getAll(){
-        return this.products 
+      async getAll(){
+        try{            
+            const data = await fs.promises.readFile(this.path)
+            const dataProductos = JSON.parse(data)
+            const { products = [] } = dataProductos
+            return products
+        }catch(err){
+            return []
+        }
     }
 
-    get(id){
-        const product = this.products.find(prod => prod.id === id)
+    async get(id){
+        const products = await this.getAll()
+        const product = products.find(prod => prod.id == id)
         return product
     }
     
-    create(data){
-        this.lastId = this.lastId + 1
-        const newProduct = { id : this.lastId , timestamps: Date.now() ,...data}
-        this.products.push(newProduct)
-   
-        return newProduct
+    async create(data){
+        
+            const product = { id : await this.#getCurrentId() + 1 , timestamps: Date.now() ,...data } 
+            const newProducts = [ ...await this.getAll(), product]
+
+            await this.#saveInFile(newProducts,product.id)
+ 
+            return product
+        
+       
     }
 
-    update(id, data){
+    async update(id, data){
         let productUpdated; 
 
-        this.products = this.products.map((prod)=>{
+        let products = await this.getAll()
+
+        let newProducts = products.map((prod)=>{
             if(prod.id == id) {
                 productUpdated = { ...prod, ...data}
-
                 return productUpdated
             }
-
             return prod
         })
 
+        await this.#saveInFile(newProducts)
+
         return productUpdated
     }
-    remove(id){
+    async remove(id){
+
         let deletedProduct
-        this.products = this.products.filter(prod =>{
+
+        let newProducts = await this.getAll()
+        
+        newProducts = newProducts.filter(prod =>{
             if(prod.id !== id){
                 return prod
             }else{
@@ -57,11 +66,32 @@ class Product{
             }
         } )
 
+        await this.#saveInFile(newProducts)
+
         return deletedProduct
     }
 
+    async #getCurrentId(){
+        try{
+            const data =  await fs.promises.readFile(this.path)
+            const { currentId } = JSON.parse(data)
+            return currentId 
 
+        }catch(err){
+            return 0
+        }
+        
+    }
 
+    async #saveInFile(products,currentId = null){
+        await fs.promises.writeFile(
+            this.path,
+            JSON.stringify(
+                {products: products, 
+                 currentId: currentId || await this.#getCurrentId() },
+                 null,'\t'))
+
+    }
 }   
 
-module.exports = new Product()
+module.exports = new Product('productos.txt')

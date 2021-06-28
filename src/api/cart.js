@@ -1,60 +1,74 @@
-const productApi = require('../api/product')
+const fs = require ('fs')
 
 class Cart{
 
-    constructor(){
-        this.cartProducts = [
-            {
-             id: 1,
-             timestamp: Date.now(),
-             producto: {
-                    id: 1,
-                    timestamps: Date.now(),
-                    nombre: 'Nuevo producto',
-                    descripcion: 'Mi nuevo Producto',
-                    codigo: '0001',
-                    foto: 'http://image.jpg',
-                    precio: 5500.00,
-                    stock: 5
-                }
-            }
-        ]
-        this.lastId = 1
+    constructor(path){
+        this.path = path
     }
 
-    get(id){
-        const cartProduct = this.cartProducts.find(prod => prod.id === id)
+    async get(id){
+        const cartItems = await this.getAll()
+
+        const cartProduct = cartItems.find(prod => prod.id === id)
+
         return cartProduct 
     }
-    getAll(){
-        return this.cartProducts
+    async getAll(){
+        try{            
+            const data = await fs.promises.readFile(this.path)
+            const dataCart = JSON.parse(data)
+            const { cartItems = [] } = dataCart
+            return cartItems
+        }catch(err){
+            return []
+        }
     }
-    add(product){
 
-       this.lastId += 1
-       const cartProduct = { id: this.lastId ,timestamp: Date.now(), product }
-        
-       this.cartProducts.push(cartProduct)
+    async add(product){
+       const cartItem = { id: await this.#getCurrentId() + 1 ,timestamp: Date.now(), product }
+       const cartItems = [...await this.getAll(), cartItem]
 
-       return cartProduct
+       await this.#saveInFile(cartItems,cartItem.id)
+       return cartItem
     }
-    remove(id){
-        let deletedProduct
-        this.cartProducts = this.cartProducts.filter(prod =>{
+
+    async remove(id){
+
+        let deletedItem
+
+        let cartItems = await this.getAll()
+
+        cartItems = cartItems.filter(prod =>{
             if(prod.id !== id){
                 return prod
             }else{
-                deletedProduct = prod
+                deletedItem = prod
             }
         } )
-
-        return deletedProduct
+        this.#saveInFile(cartItems)
+        return deletedItem
     }
 
-    #getLastId(){
+    async #getCurrentId(){
+        try{
+            const data =  await fs.promises.readFile(this.path)
+            const { currentId } = JSON.parse(data)
+            return currentId 
 
+        }catch(err){
+            return 0
+        }
+    }
+
+    async #saveInFile(cartItems,currentId = null){
+        await fs.promises.writeFile(
+            this.path,
+            JSON.stringify(
+                {cartItems: cartItems, 
+                 currentId: currentId || await this.#getCurrentId() },
+                 null,'\t'))
     }
 
 }
 
-module.exports = new Cart()
+module.exports = new Cart('carrito.txt')

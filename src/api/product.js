@@ -4,8 +4,10 @@ class Product{
     constructor(path){
         this.path = path
     }
+
     async getAll(){
          const products = await fsMngr.getData(this.path)
+
          return products
       
     }
@@ -24,7 +26,6 @@ class Product{
             await fsMngr.saveInFile(this.path,newProducts,product.id)
  
             return product
-        
        
     }
 
@@ -44,9 +45,7 @@ class Product{
         return productUpdated
     }
     async remove(id){
-
         let deletedProduct
-
         let newProducts = await this.getAll()
         
         newProducts = newProducts.filter(prod =>{
@@ -57,7 +56,7 @@ class Product{
             }
         } )
 
-        await fsMnger.saveInFile(this.path,newProducts)
+        await fsMngr.saveInFile(this.path,newProducts)
 
         return deletedProduct
     }

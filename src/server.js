@@ -26,9 +26,8 @@ app.use((req, res, next) => {
     })
 })
 
-const PORT = process.env.PORT 
+const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () => console.log(`Running in http://localhost:${PORT}`))
-
 
 app.on('error',err => console.log(err))

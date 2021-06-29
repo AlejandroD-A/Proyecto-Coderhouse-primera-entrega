@@ -9,7 +9,8 @@ class Cart{
     async get(id){
         const cartItems = await fsMngr.getData(this.path)
         const cartProduct = cartItems.find(prod => prod.id === id)
-        return cartProduct 
+        
+        return cartProduct
     }
     async getAll(){
         try{            

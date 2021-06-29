@@ -10,26 +10,6 @@
 			"precio": 5500,
 			"stock": 5
 		},
-		{
-			"id": 2,
-			"timestamps": 1624925849351,
-			"nombre": "nuevo",
-			"descripcion": "Nuevo",
-			"codigo": "2",
-			"foto": "http://image.jpg",
-			"precio": 5500,
-			"stock": 5
-		},
-		{
-			"id": 3,
-			"timestamps": 1624925850032,
-			"nombre": "nuevo",
-			"descripcion": "Nuevo",
-			"codigo": "2",
-			"foto": "http://image.jpg",
-			"precio": 5500,
-			"stock": 5
-		}
 	],
 	"currentId": 3
 }

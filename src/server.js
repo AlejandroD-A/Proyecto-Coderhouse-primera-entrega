@@ -9,8 +9,8 @@ app.use(express.urlencoded({
 }))
 
 //Routes
-app.use('/api/productos',require('./routes/products'))
-app.use('/api/carrito',require('./routes/cart'))
+app.use('/productos',require('./routes/products'))
+app.use('/carrito',require('./routes/cart'))
 
 // Middleware para manejar errores
 app.use((error, req, res, next) => {

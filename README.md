@@ -15,33 +15,33 @@ Se debia crear una variable Booleana administrador, la cual segun su valor permi
  ##### Productos
 
  * *Obtener todos los productos*
-    * `GET` | /api/productos/listar
+    * `GET` | /productos/listar
   
  * *Obtener un producto*
-    * `GET` |  /api/productos/listar/:id 
+    * `GET` |  /productos/listar/:id 
  
  * *Crear un nuevo producto*
-    * `POST` |  /api/productos/agregar
+    * `POST` |  /productos/agregar
  
  * *Actualizar  producto*
-    * `PUT` |  /api/productos/actualizar/:id
+    * `PUT` |  /productos/actualizar/:id
  
  * *Eliminar producto*
-    * `DELETE` |  /api/productos/borrar/:id
+    * `DELETE` |  /productos/borrar/:id
  
  ##### Carrito
 
 * **Obtener todos los productos del carrito con los campos id y timestamps de carrito**
-    * `GET` | /api/carrito
+    * `GET` | /carrito
   
  * **Obtener un producto del carrito con los campos id y timestamps de carrito**
-    * `GET` |  /api/carrito/:id 
+    * `GET` |  /carrito/:id 
  
  * **Agregar al carrito**
-    * `POST` |  /api/carrito/:id_producto
+    * `POST` |  /carrito/:id_producto
  
  * **Eliminar item del carrito**
-    * `DELETE` |  /api/carrito/:id
+    * `DELETE` |  /carrito/:id
 
 Para ejecutar en local:   
 `npm start`

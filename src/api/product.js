@@ -1,20 +1,13 @@
-const fs = require('fs')
+const fsMngr = require ('../persistence/FsManager')
 
-class Product{
-    
+class Product{ 
     constructor(path){
         this.path = path
     }
-
-      async getAll(){
-        try{            
-            const data = await fs.promises.readFile(this.path)
-            const dataProductos = JSON.parse(data)
-            const { products = [] } = dataProductos
-            return products
-        }catch(err){
-            return []
-        }
+    async getAll(){
+         const products = await fsMngr.getData(this.path)
+         return products
+      
     }
 
     async get(id){
@@ -25,10 +18,10 @@ class Product{
     
     async create(data){
         
-            const product = { id : await this.#getCurrentId() + 1 , timestamps: Date.now() ,...data } 
+            const product = { id : await fsMngr.getCurrentId(this.path) + 1 , timestamps: Date.now() ,...data } 
             const newProducts = [ ...await this.getAll(), product]
 
-            await this.#saveInFile(newProducts,product.id)
+            await fsMngr.saveInFile(this.path,newProducts,product.id)
  
             return product
         
@@ -37,9 +30,7 @@ class Product{
 
     async update(id, data){
         let productUpdated; 
-
         let products = await this.getAll()
-
         let newProducts = products.map((prod)=>{
             if(prod.id == id) {
                 productUpdated = { ...prod, ...data}
@@ -48,7 +39,7 @@ class Product{
             return prod
         })
 
-        await this.#saveInFile(newProducts)
+        await fsMngr.saveInFile(this.path,newProducts)
 
         return productUpdated
     }
@@ -66,32 +57,11 @@ class Product{
             }
         } )
 
-        await this.#saveInFile(newProducts)
+        await fsMnger.saveInFile(this.path,newProducts)
 
         return deletedProduct
     }
 
-    async #getCurrentId(){
-        try{
-            const data =  await fs.promises.readFile(this.path)
-            const { currentId } = JSON.parse(data)
-            return currentId 
-
-        }catch(err){
-            return 0
-        }
-        
-    }
-
-    async #saveInFile(products,currentId = null){
-        await fs.promises.writeFile(
-            this.path,
-            JSON.stringify(
-                {products: products, 
-                 currentId: currentId || await this.#getCurrentId() },
-                 null,'\t'))
-
-    }
 }   
 
 module.exports = new Product('productos.txt')

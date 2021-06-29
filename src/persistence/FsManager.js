@@ -30,7 +30,7 @@ class FsManager{
             path,
             JSON.stringify(
                 {data: data, 
-                 currentId: currentId || await this.#getCurrentId() },
+                 currentId: currentId || await this.getCurrentId(path) },
                  null,'\t'))
     }
 }

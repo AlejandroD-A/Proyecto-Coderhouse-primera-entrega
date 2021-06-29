@@ -1,4 +1,4 @@
-const fs = require ('fs')
+const fsMngr = require ('../persistence/FsManager')
 
 class Cart{
 
@@ -7,28 +7,25 @@ class Cart{
     }
 
     async get(id){
-        const cartItems = await this.getAll()
-
+        const cartItems = await fsMngr.getData(this.path)
         const cartProduct = cartItems.find(prod => prod.id === id)
-
         return cartProduct 
     }
     async getAll(){
         try{            
-            const data = await fs.promises.readFile(this.path)
-            const dataCart = JSON.parse(data)
-            const { cartItems = [] } = dataCart
-            return cartItems
+            const cartItems = await fsMngr.getData(this.path)
+            return  cartItems
         }catch(err){
             return []
         }
     }
 
     async add(product){
-       const cartItem = { id: await this.#getCurrentId() + 1 ,timestamp: Date.now(), product }
-       const cartItems = [...await this.getAll(), cartItem]
+       const cartItem = { id: await fsMngr.getCurrentId(this.path) + 1 ,timestamp: Date.now(), product }
+       const cartItems = [...await fsMngr.getData(this.path), cartItem]
 
-       await this.#saveInFile(cartItems,cartItem.id)
+       await fsMngr.saveInFile(this.path,cartItems,cartItem.id)
+
        return cartItem
     }
 
@@ -36,7 +33,7 @@ class Cart{
 
         let deletedItem
 
-        let cartItems = await this.getAll()
+        let cartItems = await fsMngr.getData(this.path)
 
         cartItems = cartItems.filter(prod =>{
             if(prod.id !== id){
@@ -45,29 +42,11 @@ class Cart{
                 deletedItem = prod
             }
         } )
-        this.#saveInFile(cartItems)
+
+        await fsMngr.saveInFile(this.path,cartItems)
         return deletedItem
     }
 
-    async #getCurrentId(){
-        try{
-            const data =  await fs.promises.readFile(this.path)
-            const { currentId } = JSON.parse(data)
-            return currentId 
-
-        }catch(err){
-            return 0
-        }
-    }
-
-    async #saveInFile(cartItems,currentId = null){
-        await fs.promises.writeFile(
-            this.path,
-            JSON.stringify(
-                {cartItems: cartItems, 
-                 currentId: currentId || await this.#getCurrentId() },
-                 null,'\t'))
-    }
 
 }
 

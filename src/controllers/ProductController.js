@@ -43,13 +43,13 @@ class ProductController{
     }
     async borrar (req,res){
         try{
-            const producto =await product.remove(Number(req.params.id))
+            const producto = await product.remove(Number(req.params.id))
     
             if( producto == undefined || producto == null ) return  res.status(404).json({error: 'No se encontro el producto'})
     
             return  res.json({producto: producto })
         }catch(err){
-            return res.json.status(500)({error: 'Ha ocurrido un error'})
+            return res.status(500).json({error: 'Ha ocurrido un error'})
         }
         
     }

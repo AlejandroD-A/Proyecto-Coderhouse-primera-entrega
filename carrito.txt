@@ -1,4 +1,0 @@
-{
-	"data": [],
-	"currentId": 1
-}

@@ -3,8 +3,9 @@
 Se implemento el proyecto separando la logica de la siguiente manera:
 * Routes:  Se definen las rutas necesarias tanto de productos como el carrito.
 * Controllers: Se manejan las peticiones de las rutas y retorna la respuesta correspondiente.
-* Api: Se encuentran las clases Product y Cart que manipulan y devuelven los recursos al controlador. 
-* Persistence: Es utilizada por Product y Cart para obtener los datos desde los archivos correspondientes y guardar los mismos en un .txt .
+* Persistence: Se encuentran las clases Product y Cart que manipulan y devuelven los recursos al controlador. 
+ 
+Se creo una clase FSManager para facilitar el manejo de archivos con fs
 
 Se debia crear una variable Booleana administrador, la cual segun su valor permita alcanzar o no algunas rutas. **Se creo un middleware `\middlewares\checkAdmin` y se aplico en los archivos de rutas correspondientes.**
 
@@ -14,34 +15,34 @@ Se debia crear una variable Booleana administrador, la cual segun su valor permi
 
  ##### Productos
 
- * *Obtener todos los productos*
+ * **Obtener todos los productos**
     * `GET` | /productos/listar
   
- * *Obtener un producto*
+ * **Obtener un producto**
     * `GET` |  /productos/listar/:id 
  
- * *Crear un nuevo producto*
+ * **Crear un nuevo producto**
     * `POST` |  /productos/agregar
  
- * *Actualizar  producto*
+ * **Actualizar  producto**
     * `PUT` |  /productos/actualizar/:id
  
- * *Eliminar producto*
+ * **Eliminar producto**
     * `DELETE` |  /productos/borrar/:id
  
  ##### Carrito
 
 * **Obtener todos los productos del carrito con los campos id y timestamps de carrito**
-    * `GET` | /carrito
+    * `GET` | /carrito/listar
   
  * **Obtener un producto del carrito con los campos id y timestamps de carrito**
-    * `GET` |  /carrito/:id 
+    * `GET` |  /carrito/listar/:id 
  
  * **Agregar al carrito**
-    * `POST` |  /carrito/:id_producto
+    * `POST` |  /carrito/agregar/:id_producto
  
  * **Eliminar item del carrito**
-    * `DELETE` |  /carrito/:id
+    * `DELETE` |  /carrito/borrar/:id
 
 Para ejecutar en local:   
 `npm start`

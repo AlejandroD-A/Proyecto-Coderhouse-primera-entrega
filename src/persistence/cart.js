@@ -1,4 +1,4 @@
-const fsMngr = require ('../persistence/FsManager')
+const fsMngr = require ('../utils/FsManager')
 
 class Cart{
 

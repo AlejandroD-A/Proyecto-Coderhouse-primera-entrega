@@ -1,5 +1,5 @@
-const apiCart = require('../api/cart')
-const apiProduct= require('../api/product')
+const cartPersis = require('../persistence/cart')
+const productPersis= require('../persistence/product')
 
 class CartController{
     constructor(){
@@ -8,9 +8,9 @@ class CartController{
         try{
             const id = req.params.id
 
-            if( !id ) return res.json({cart: await apiCart.getAll() })
+            if( !id ) return res.json({cart: await cartPersis.getAll() })
         
-            const cartProduct =  await apiCart.get(Number(id))
+            const cartProduct =  await cartPersis.get(Number(id))
         
             if( cartProduct == undefined ) return res.json({error: 'No se encontro el articulo en el carrito'})
     
@@ -24,11 +24,11 @@ class CartController{
 
     async agregar(req,res){
         try{
-            const product = await apiProduct.get(Number(req.params.id_producto))
+            const product = await productPersis.get(Number(req.params.id_producto))
 
             if( product == undefined || product == null ) return res.json({error: 'No existe ese producto a guardar'})
             
-            const cartProduct = await apiCart.add(product)
+            const cartProduct = await cartPersis.add(product)
     
             if(cartProduct == null || cartProduct == undefined ) res.json({error: 'Ha ocurrido un error'})
     
@@ -42,7 +42,7 @@ class CartController{
 
     async borrar(req,res){
         try{
-            const producto = await apiCart.remove(Number(req.params.id))
+            const producto = await cartPersis.remove(Number(req.params.id))
 
             if(producto == undefined || producto == null ) return  res.json({error: 'No se encontro producto en carrito'})
         
